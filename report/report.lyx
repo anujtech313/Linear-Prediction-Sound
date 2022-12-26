@@ -1,0 +1,3199 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
+\pagenumbering{roman}
+
+\usepackage{color}
+
+\definecolor{commentgreen}{RGB}{0,94,11}
+\end_preamble
+\use_default_options true
+\begin_modules
+customHeadersFooters
+minimalistic
+todonotes
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype true
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command biber
+\index_command default
+\paperfontsize 11
+\spacing onehalf
+\use_hyperref true
+\pdf_title "Linear Predictive Speech Synthesizer"
+\pdf_author "Andy Pack"
+\pdf_subject "EEEM030 Speech & Audio Processing & Recognition"
+\pdf_keywords "EEEM030"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine biblatex
+\cite_engine_type authoryear
+\biblio_style plain
+\biblio_options urldate=long
+\biblatex_bibstyle ieee
+\biblatex_citestyle ieee
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.8cm
+\topmargin 2cm
+\rightmargin 1.8cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\bullet 1 0 9 -1
+\bullet 2 0 24 -1
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+
+\size giant
+Linear Predictive Speech Synthesizer
+\end_layout
+
+\begin_layout Author
+Andy Pack
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace 15pheight%
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename surrey.png
+	lyxscale 15
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+EEEM030
+\begin_inset Newline newline
+\end_inset
+
+November 2020
+\size large
+
+\begin_inset Newline newline
+\end_inset
+
+Department of Electrical and Electronic Engineering
+\begin_inset Newline newline
+\end_inset
+
+Faculty of Engineering and Physical Sciences
+\begin_inset Newline newline
+\end_inset
+
+University of Surrey
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+A system implementing the source-filter model of speech is presented and
+ evaluated using vowel segments as subjects.
+ Linear predictive coding is used to estimate the formant frequencies of
+ the samples while the cepstrum is used to identify the fundamental frequency.
+ Comparisons of the LPC filter spectrum with the original audio spectrum
+ are provided.
+ A periodic impulse train of the same pitch period is used to synthesise
+ vowel samples, a subjective analysis of the segment quality is given.
+ Evaluations of various parameter variations are also presented.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList table
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand lstlistoflistings
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Right Footer
+Andy Pack / 6420013
+\end_layout
+
+\begin_layout Left Footer
+November 2020
+\end_layout
+
+\begin_layout Left Header
+EEEM030 Coursework
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagenumbering{arabic} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{page}{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+Speech analysis and processing is an ever-expanding space with applications
+ from data compression to speech recognition.
+ The latter is a particularly relevant and popular area, presenting an important
+ domain for AI and machine learning applications.
+\end_layout
+
+\begin_layout Standard
+Prior to these, however, the ability to analyse, transform and identify
+ key parameters for a speech signal are important tools that will be explored
+ herein.
+\end_layout
+
+\begin_layout Subsection
+Brief
+\end_layout
+
+\begin_layout Standard
+The aim of this report is to demonstrate how digital signal processing technique
+s can be used to analyse, model and synthesise speech.
+ The task will be considered as two areas of concern, that of modelling
+ and synthesis.
+\end_layout
+
+\begin_layout Standard
+The modelling stage will utilise Linear Predictive Coding
+\begin_inset CommandInset citation
+LatexCommand cite
+key "all-pole-resonance"
+literal "false"
+
+\end_inset
+
+ and the source-filter model of speech
+\begin_inset CommandInset citation
+LatexCommand cite
+key "source-filter-macquaire"
+literal "false"
+
+\end_inset
+
+ to construct an all-pole filter that acts similarly to the vocal tract's
+ effect on sound produced by the vocal chords.
+ Comparisons of the frequency response for both the estimated filter and
+ the original sound will be presented, the effect of different filter orders
+ will also be demonstrated.
+ Relevant parameters of the original vowel speech segment will be presented
+ including the fundamental frequency
+\begin_inset CommandInset citation
+LatexCommand cite
+key "aalto-fundamental-freq"
+literal "false"
+
+\end_inset
+
+ and formant frequencies.
+\end_layout
+
+\begin_layout Standard
+The synthesis stage will complete the source-filter model of speech by creating
+ a suitable periodic sound source to be modulated by the previous filter.
+ With a complete source-filter model, artificial vowel sounds will be synthesise
+d and analysed.
+ Subjective assessments will be made as to the differences between the original
+ sound and the final product of the model when system parameters are varied.
+\end_layout
+
+\begin_layout Section
+Implementation
+\end_layout
+
+\begin_layout Standard
+The implementation of this system was completed using 
+\noun on
+Matlab
+\noun default
+ with aid from functions in the digital signal processing toolbox among
+ others.
+ Following loading a vowel sample, a segment of given length (100ms was
+ typical) was clipped for processing.
+ The investigations were conducted on two samples, 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily},tabsize=4"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+hood_m.wav
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily},tabsize=4"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+head_f.wav
+\end_layout
+
+\end_inset
+
+, any results from other samples are identified as such.
+\end_layout
+
+\begin_layout Subsection
+Modelling
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Modelling"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In order to estimate the filter state of the vocal tract, the linear predictive
+ coding coefficients of varying orders were calculated using the 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily},tabsize=4"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+lpc(signal, order)
+\end_layout
+
+\end_inset
+
+ function.
+ In order to compare the frequency response of the LPC filter with the original
+ signal, the Fourier transform of the signal was calculated.
+ The frequency domain representation of the LPC filter was found using the
+ 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily},tabsize=4"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+freqz(b, a, n, f)
+\end_layout
+
+\end_inset
+
+ function and co-plotted with the original signal.
+ This frequency plot of the LPC filter constitutes the spectral envelope
+ of the signal and the vowel formant frequencies can be found at the maxima
+ of the spectrum.
+ The smooth profile of the LPC spectrum allowed the formant frequencies
+ to be estimated by identifying the local maxima
+\begin_inset CommandInset citation
+LatexCommand cite
+key "max-min,islocalmax"
+literal "false"
+
+\end_inset
+
+ of the function.
+\end_layout
+
+\begin_layout Standard
+In order to find the fundamental frequency of the signal, the cepstrum
+\begin_inset CommandInset citation
+LatexCommand cite
+key "quefrency"
+literal "false"
+
+\end_inset
+
+ was used.
+ Regular periodic frequencies in the time domain present as peaks in the
+ quefrency domain, these can also be identified with an auto-corelation
+ function.
+ The use of a low-pass filter was investigated in order to smooth the cepstrum
+ before programmatically finding pitch period candidates by applying 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ thresholds.
+ Firstly, local maxima of the cepstrum function were found using the 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+islocalmax(x)
+\end_layout
+
+\end_inset
+
+ function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "islocalmax"
+literal "false"
+
+\end_inset
+
+.
+ A minimum quefrency threshold of 20 was applied to ignore the transient-like
+ oscillations at small 
+\begin_inset Formula $x$
+\end_inset
+
+ values.
+ Lowering the quefrency corresponds to an increase in frequency, thus it
+ is reasonable to discard these values when 20 samples represents 1200Hz
+ when sampled at 24kHz, a frequency higher than that of the fundamental
+ frequency being investigated.
+ Additionally a minimum cepstrum threshold of 0.075 was used, from here the
+ quefrency candidate with the highest value was used as the pitch period.
+\end_layout
+
+\begin_layout Subsection
+Synthesis
+\end_layout
+
+\begin_layout Standard
+In order to synthesise speech, a periodic impulse train at the identified
+ fundamental frequency of the original vowel was generated.
+ As the fundamental frequency of speech is far lower than a typical audio
+ signal would be sampled at, a carrier signal of the same sampling frequency
+ as the original sound was modulated by the lower frequency impulse train,
+ see listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "get_impulse_train_function"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In order to produce the final synthesised speech, the generated impulse
+ train must be convolved (in the time domain) with the transfer function
+ of the LPC filter representing the vocal tract
+\begin_inset CommandInset citation
+LatexCommand cite
+key "source-filter-macquaire"
+literal "false"
+
+\end_inset
+
+.
+ In 
+\noun on
+Matlab
+\noun default
+ this can be completed with the 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+filter(b, a, x)
+\end_layout
+
+\end_inset
+
+ which takes the provided coefficients (
+\begin_inset Formula $a,b$
+\end_inset
+
+) and applies the transfer function these describe.
+ This final signal was written to disk and played for comparison to the
+ original.
+\end_layout
+
+\begin_layout Section
+Results
+\end_layout
+
+\begin_layout Subsection
+LPC Filter
+\end_layout
+
+\begin_layout Standard
+LPC filter coefficients of varying orders were calculated, the values for
+ each vowel sample at order 20 can be seen in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Order-20-LPC-Coeffs"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The frequency response for similar filters of order 25 can be seen in figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:stacked-spectra"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, as described in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Modelling"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the local maxima of the filter response were also plotted as red crosses.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="12">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+11
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+head_f
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-1.8275
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.6130
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.7424
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.2264
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-1.0744
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.8921
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.4595
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.8184
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.3913
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+1.2207
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+hood_m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-1.9166
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.9014
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.1898
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.5570
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.9309
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.4874
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+1.0068
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.0966
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.4469
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.1029
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="11">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+17
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+18
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+19
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+20
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+21
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+head_f
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.3812
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.5842
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.2820
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.7351
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.8951
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.1172
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.4359
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.1220
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.3546
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.1977
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+hood_m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.6152
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.7490
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.1002
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.3020
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.1184
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.0494
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.6293
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.3474
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+-0.2172
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+0.2164
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Order 20 LPC coefficients for both investigated samples, source segments
+ taken from the first 100ms of each vowel sample
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Order-20-LPC-Coeffs"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename ../resources/head_f_spect_25.png
+	lyxscale 10
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+head_f
+\end_layout
+
+\end_inset
+
+, order 25
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename ../resources/hood_m_spect_25.png
+	lyxscale 10
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+hood_m
+\end_layout
+
+\end_inset
+
+, order 25
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+LPC filter and vowel segment spectra for both investigated samples
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:stacked-spectra"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As the spectra are plotted with the same frequency axes bounds, the peaks
+ of the filter response corresponding to estimations of the formant frequencies
+ can be compared between the male and females voice.
+ In general the male's formant frequencies are lower than for the female's
+ sample, this can be seen specifically with the first few peaks.
+ It's worth noting that the first local maxima identified in the 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+head_f
+\end_layout
+
+\end_inset
+
+ sample does not appear to have identified a peak that would be considered
+ a formant.
+\end_layout
+
+\begin_layout Subsubsection
+Order Variation
+\end_layout
+
+\begin_layout Standard
+The effect of increasing the order of the LPC filter can be seen in figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Spectrum-Tile"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the order of the 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+hood_m
+\end_layout
+
+\end_inset
+
+ filter is repeatably incremented by 5.
+ In general, as the order of the filter is increased, the spectral response
+ of the LPC filter closer fits the spectrum of the original vowel segment.
+ At lower orders, the filter's response can smooth over multiple peaks and
+ valleys in the original signal as can be seen at order 6, whereas by order
+ 36 the LPC spectrum follows all of the major motions of the speech signal.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename ../resources/hood_m_lpc_tile.png
+	lyxscale 20
+	width 100col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Effect of increasing LPC filter order on the 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+hood_m
+\end_layout
+
+\end_inset
+
+ sample
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Spectrum-Tile"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Source Segment Length Variation
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:seg_length"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ presents the speech sample and LPC filter spectral response for different
+ source sample lengths.
+ As the source sample length increases the spectral profile becomes less
+ smooth with higher peaks and deeper troughs throughout.
+ Additionally the mid to higher frequencies are affected more, the first
+ few formants are less affected.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /mnt/files/dev/matlab/lpss/resources/hood_m_25spect.png
+	lyxscale 10
+	width 25col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /mnt/files/dev/matlab/lpss/resources/hood_m_50spect.png
+	lyxscale 10
+	width 25col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /mnt/files/dev/matlab/lpss/resources/hood_m_100spect.png
+	lyxscale 10
+	width 25col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /mnt/files/dev/matlab/lpss/resources/hood_m_200spect.png
+	lyxscale 10
+	width 25col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Increasing source segment lengths for the 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+hood_m
+\end_layout
+
+\end_inset
+
+ sample
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:seg_length"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Spectral Analysis
+\end_layout
+
+\begin_layout Subsubsection
+Formant Frequencies
+\end_layout
+
+\begin_layout Standard
+As described previously, the smooth profile of the LPC filter spectra allows
+ the local maxima to be used as reasonable estimations of the peaks.
+ The first three formants for the order 25 filters seen in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:stacked-spectra"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be seen in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:formant-frequencies"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, as described above the first local maxima for the female 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+head_f
+\end_layout
+
+\end_inset
+
+ sample was not included as 
+\begin_inset Formula $f_{1}$
+\end_inset
+
+ as it did not refer to a maximum that would indicate a formant.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+head_f
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+hood_m
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+719.4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+369.7
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2,218.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1,578.7
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3,197.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2,278.1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f_{2}-f_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1,498.8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1,209.0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+First formant frequencies at order 25, Hz
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:formant-frequencies"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:IPA-vowels"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ presents average formant frequencies for the investigated vowel sounds
+ as displayed in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "formant-frequencies"
+literal "false"
+
+\end_inset
+
+.
+ The percentage difference between these averages and the calculated estimations
+ are also presented.
+ The female sample was closer to the averages than the male sample.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="8">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Average Frequency
+\begin_inset CommandInset citation
+LatexCommand cite
+key "formant-frequencies"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Measured % Difference
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sample
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vowel
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f_{2}-f_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f_{2}-f_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+head_f
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+/ɛ/
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+731
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2,058
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1,327
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.9
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+hood_m
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+/ʊ/
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+469
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1,122
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+653
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40.7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+85.1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Relevant IPA vowels and their average formant frequencies
+\begin_inset CommandInset citation
+LatexCommand cite
+key "formant-frequencies"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:IPA-vowels"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Cepstrum Smoothing
+\end_layout
+
+\begin_layout Standard
+The effect of smoothing the cepstrum with a low-pass filter is presented
+ in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:smoothed-cepstrum"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, [1 -0.7] were used as coefficients.
+ When employing smoothing, the peak corresponding to the pitch period has
+ been amplified compared to the unsmoothed curve where the pitch period
+ does not reach far beyond the noise of the rest of the function.
+ As a result of this, smoothing was employed in the following when identifying
+ the fundamental frequency.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename ../resources/head_f_rcep_~smooth.png
+	lyxscale 10
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../resources/head_f_rcep_smooth.png
+	lyxscale 10
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Real cepstrum for 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+head_f
+\end_layout
+
+\end_inset
+
+ with and without low-pass filtering, thresholded local maxima crossed,
+ smoothing coefficients: [1 -0.7]
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:smoothed-cepstrum"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Fundamental Frequency
+\end_layout
+
+\begin_layout Standard
+The fundamental frequency was calculated by identifying the pitch period
+ in the real cepstrum.
+ The cepstrums for either sample were thresholded and the candidates can
+ be seen in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:cepstrums-w-pitch-period"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The identified quefrency pitch period, 
+\begin_inset Formula $q_{p}$
+\end_inset
+
+, and the corresponding fundamental frequency, 
+\begin_inset Formula $f_{f}$
+\end_inset
+
+, can be seen in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:fund-freq"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Formula $f_{f}$
+\end_inset
+
+ was calculated using the following where 
+\begin_inset Formula $f_{s}$
+\end_inset
+
+ is the sample frequency,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f_{f}=\frac{1}{\nicefrac{q_{p}}{f_{s}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename ../resources/head_f_rcep_smooth_X.png
+	lyxscale 10
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../resources/hood_m_rcep_smooth_X.png
+	lyxscale 10
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Real cepstrums with candidate pitch periods highlighted
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:cepstrums-w-pitch-period"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+head_f
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+hood_m
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pitch Period, samples
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+105
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+255
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Fundamental Frequency, Hz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+228.57
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+94.12
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Pitch period and fundamental frequency as calculated from the real cepstrum
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:fund-freq"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Synthesis
+\end_layout
+
+\begin_layout Standard
+Following the convolution of the impulse train and the LPC filter, the spectrogr
+ams for the original and synthesised sound can be seen in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Spectrograms-synth"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The circled areas highlight similar portions, the formant frequencies can
+ be seen as bright horizontal lines in both.
+ Despite being quasi-stationary, some variation in time can be seen throughout
+ the original signal.
+ The stationary synthesised signal, however, has a flat profile in time.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename ../resources/hood_m_gram.png
+	lyxscale 10
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../resources/hood_m_gram_synth.png
+	lyxscale 10
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Spectrograms for the original and synthesised vowel segment, areas of comparison
+ highlighted
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Spectrograms-synth"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At lower filter orders (< 10), the synthesised speech has a 
+\emph on
+buzzy
+\emph default
+ quality resembling a sawtooth wave of the same pitch as the original voice
+ sample.
+ At these orders, the synthesised sound can not accurately be discerned
+ as speech.
+ As the filter order increases, the tone of the sound becomes less harsh
+ and by around order 20 the sample could be identified as being of a voice.
+ By order 40, much of the harsh tone has been smoothed and the sample subjective
+ly sounds as close to human speech as could be achieved.
+ Beyond this order, although the sound does change and smooth, it does not
+ appear to further approach the quality of the original sound.
+\end_layout
+
+\begin_layout Section
+Discussion
+\end_layout
+
+\begin_layout Standard
+As presented, the order of the LPC filter is a critical parameter for audio
+ quality.
+ An order that is too low will not allow the filter to accurately map to
+ the desired vowel spectrum leaving a sound that, although at the right
+ pitch, does not appreciably sound like the source segment.
+ At the other end, increasing the order beyond a certain complexity can
+ result in diminishing returns.
+ Although the sound sounded smoother, beyond around order 40 it did not
+ noticeably further approach the original sound.
+ Subjectively, an order of 30 provided a good approximation of the input
+ sound with acceptable quality for low bandwidth transmission.
+\end_layout
+
+\begin_layout Standard
+The use of low-pass filtering on the cepstrum when identifying the fundamental
+ frequency was effective in accentuating the peak corresponding to the pitch
+ period.
+ With this, a higher 
+\begin_inset Formula $y$
+\end_inset
+
+ threshold could be used that would be further from the noise of the function
+ while still consistently identifying the correct peak.
+\end_layout
+
+\begin_layout Standard
+The relative frequencies for male and female speech was as expected with
+ the male speech segment having both lower fundamental frequencies and formant
+ frequencies.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+A 100ms vowel segment sampled at 24kHz totals to 2,400 samples.
+ Assuming that each is represented by a float of 4 bytes, this uncompressed
+ vowel segment would fill 9600 bytes of storage.
+ Encoding the same 100ms of information via LPC using an order 30 filter
+ could reduce this to 120 bytes, just 1% of the previous space.
+ This is particularly important for audio transmission such as in mobile
+ telecoms, the GSM standard uses codecs based on LPC
+\begin_inset CommandInset citation
+LatexCommand cite
+key "etsi-gsm"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Standard
+Within this work, a complete source-filter model of speech has been presented,
+ analysing vowel samples and re-synthesising them while compressing the
+ data representation.
+ The effect of changing the complexity of this representation was investigated
+ by varying the order of the LPC filter and describing the effect on the
+ final audio sample.
+ Various statistics about the original samples were calculated including
+ the formant frequencies and the fundamental frequency.
+ With a sufficient filter order, sound samples comparable to human speech
+ were generated.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:bibliography"
+
+\end_inset
+
+
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "references"
+options "bibtotoc"
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\start_of_appendix
+Source Code
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Code"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+While much of the code was developed in individual scripts in order to experimen
+t with separate aspects of the system, for collecting results a script which
+ constitutes the entire system was written, 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+lpss.m
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Additional helper functions were written to plot and manipulate data.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../lpss.m"
+lstparams "breaklines=true,frame=tb,language=Matlab,basicstyle={\\ttfamily},commentstyle={\\color{commentgreen}\\itshape},keywordstyle={\\color{blue}},emphstyle={\\color{red}},stringstyle={\\color{red}},identifierstyle={\\color{cyan}},morekeywords={audioread, aryule, xcorr, freqz, spectrogram, mfcc, spectro, fft_, autocorr, clip_segment, islocalmax, ms_to_samples, rceps, cceps, ones, audioplayer, play, get_impulse_train, lpc, strcat, num2str, xlim},caption={Main script including source-filter model and spectral analysis},label={main_script}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../func/spectro.m"
+lstparams "breaklines=true,frame=tb,language=Matlab,basicstyle={\\ttfamily},commentstyle={\\color{commentgreen}\\itshape},keywordstyle={\\color{blue}},emphstyle={\\color{red}},stringstyle={\\color{red}},identifierstyle={\\color{cyan}},morekeywords={audioread, aryule, xcorr, freqz, spectrogram, ms_to_samples, xlim},caption={Spectrogram plotting wrapper function},label={spectrogram_function}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../func/fft_.m"
+lstparams "breaklines=true,frame=tb,language=Matlab,basicstyle={\\ttfamily},commentstyle={\\color{commentgreen}\\itshape},keywordstyle={\\color{blue}},emphstyle={\\color{red}},stringstyle={\\color{red}},identifierstyle={\\color{cyan}},morekeywords={audioread, aryule, xcorr, freqz, spectrogram, xlim},caption={Fast Fourier transform wrapper function},label={fft_function}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../func/autocorr.m"
+lstparams "breaklines=true,frame=tb,language=Matlab,basicstyle={\\ttfamily},commentstyle={\\color{commentgreen}\\itshape},keywordstyle={\\color{blue}},emphstyle={\\color{red}},stringstyle={\\color{red}},identifierstyle={\\color{cyan}},morekeywords={audioread, aryule, xcorr, freqz, spectrogram, xlim},caption={Autocorrelation plotting wrapper function},label={autocorr_function}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../func/clip_segment.m"
+lstparams "breaklines=true,frame=tb,language=Matlab,basicstyle={\\ttfamily},commentstyle={\\color{commentgreen}\\itshape},keywordstyle={\\color{blue}},emphstyle={\\color{red}},stringstyle={\\color{red}},identifierstyle={\\color{cyan}},morekeywords={audioread, aryule, xcorr, freqz, spectrogram, ms_to_samples, xlim},caption={Retrieve a segment of the original speech signal},label={clip_segment_function}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../func/ms_to_samples.m"
+lstparams "breaklines=true,frame=tb,language=Matlab,basicstyle={\\ttfamily},commentstyle={\\color{commentgreen}\\itshape},keywordstyle={\\color{blue}},emphstyle={\\color{red}},stringstyle={\\color{red}},identifierstyle={\\color{cyan}},morekeywords={audioread, aryule, xcorr, freqz, spectrogram, xlim},caption={Transform time in milliseconds into the respective number of samples},label={ms_to_samples_function}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "../func/get_impulse_train.m"
+lstparams "breaklines=true,frame=tb,language=Matlab,basicstyle={\\ttfamily},commentstyle={\\color{commentgreen}\\itshape},keywordstyle={\\color{blue}},emphstyle={\\color{red}},stringstyle={\\color{red}},identifierstyle={\\color{cyan}},morekeywords={audioread, aryule, xcorr, freqz, spectrogram, ms_to_samples, repmat, xlim},caption={Generate an impulse rate of given fundamental frequency at a provided sampling frequency for a given length of time},label={get_impulse_train_function}"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
